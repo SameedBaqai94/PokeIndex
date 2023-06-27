@@ -15,7 +15,16 @@ export default ({ pokemon, spirit, stats, isopen, type, closedialog }) => {
         grass: "rgba(124, 252, 0, 0.5)",
         water: "rgba(131, 200, 242, 0.5)",
         electric: "rgba(255, 255, 0, 0.5)",
-        poison: "rgba(128, 0, 128, 0.5)"
+        poison: "rgba(128, 0, 128, 0.5)",
+        normal: "rgba(181, 101, 29,0.5)",
+        flying: "rgba(200, 162, 200,0.5)",
+        dragon: "rgba(200, 162, 200,0.5)",
+        ghost: "rgba(200, 162, 200,0.5)",
+        ice: "rgba(189, 230, 239,0.5)",
+        psychic: "rgba(255, 182, 193,0.5)",
+        ground: "rgba(165, 42, 42,0.5)",
+        rock: "rgba(165, 42, 42,0.5)",
+        fairy: "rgba(255, 182, 193,0.5)"
     }
 
     const statsCard = () => {
