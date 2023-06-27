@@ -1,10 +1,16 @@
-import { Button, Dialog, DialogContent, Card, CardActionArea, CardMedia, CardContent, Typography, DialogTitle, DialogActions } from '@mui/material';
-import { useState } from 'react';
+import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import Cards from './Cards';
 
 export default ({ pokemon }) => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [stats, setStats] = useState([],);
+    const [gifUrl, setGifUrl] = useState('');
+    const [types, setTypes] = useState([]);
 
+    const urlId = pokemon.url.match(/\/(\d+)\//)[1];
+    const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${urlId}.png`
     const openDialog = () => {
         setIsOpen(true);
     }
@@ -12,14 +18,36 @@ export default ({ pokemon }) => {
         setIsOpen(false);
     }
 
-    const urlId = pokemon.url.match(/\/(\d+)\//)[1];
+    useEffect(() => {
+        let fetched = true;
+
+        const fetchData = async () => {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+            const data = await response.json();
+            const spriteUrl = data.sprites?.versions['generation-v']['black-white'].animated.front_default;
+
+            const pokemonType = data.types.map((type) => ({
+                name: type.type.name,
+                //icon: type.type.url
+            }));
+            if (fetched) {
+                setStats(data.stats);
+                setGifUrl(spriteUrl);
+                setTypes(pokemonType);
+            }
+        }
+
+        fetchData();
+        return () => fetched = false;
+    }, [])
+
     return (
         <>
             <Card sx={{ maxWidth: 400 }} onClick={openDialog}>
                 <CardActionArea>
                     <CardMedia
                         sx={{ height: 140 }}
-                        image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${urlId}.png`}
+                        image={gifUrl}
                         title={pokemon.name}
                     />
                     <CardContent>
@@ -29,15 +57,7 @@ export default ({ pokemon }) => {
                     </CardContent>
                 </CardActionArea>
             </Card>
-            <Dialog open={isOpen} onClose={closeDialog}>
-                <DialogContent>
-                    <Typography variant="h6">
-                        Pokemon
-                    </Typography>
-
-                </DialogContent>
-
-            </Dialog>
+            <Cards pokemon={pokemon} spirit={url} stats={stats} isopen={isOpen} type={types} closedialog={closeDialog} />
         </>
     )
 

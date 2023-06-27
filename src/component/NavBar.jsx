@@ -6,6 +6,7 @@ import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -48,27 +49,32 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default ({ searchFilter }) => {
     return (
-        <AppBar position='sticky'>
-            <Container>
-                <Toolbar disableGutters>
-                    <IconButton size="large" edge="start" color="inherit" aria-label="logo">
-                        <CatchingPokemonIcon />
-                    </IconButton>
-                    <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-                        POKEINDEX
-                    </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                            onChange={(e) => searchFilter(e.target.value)}
-                        />
-                    </Search>
-                </Toolbar>
-            </Container>
-        </AppBar>
+        <>
+            <AppBar position='sticky'>
+                <Container>
+                    <Toolbar disableGutters>
+                        <IconButton size="large" edge="start" color="inherit" aria-label="logo">
+                            <CatchingPokemonIcon />
+                        </IconButton>
+                        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                            POKEDEX
+                        </Typography>
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                                onChange={(e) => searchFilter(e.target.value)}
+                            />
+                        </Search>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+
+
+        </>
+
     )
 }

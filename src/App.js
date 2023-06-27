@@ -5,16 +5,26 @@ import PokemonList from './component/PokemonList';
 import NavBar from './component/NavBar';
 
 function App() {
-  const [listPokemon, SetListPokemon] = useState([]);
+  const [listPokemon, setListPokemon] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
 
   const setData = (data) => {
-    SetListPokemon(data)
+    setListPokemon(data);
+    setFilteredList(data);
   }
 
   const searchFilter = (value) => {
-    SetListPokemon((currentList) => {
-      return currentList.filter(item => item.name.includes(value))
-    })
+    let cloneList = [...listPokemon];
+
+    console.log(value);
+    if (value === "") {
+      setFilteredList(listPokemon);
+    } else {
+      let check = cloneList.filter((e) => e.name.includes(value));
+      console.log(check);
+      setFilteredList(check);
+    }
+
   }
 
   useEffect(() => {
@@ -39,7 +49,7 @@ function App() {
   return (
     <div className="App">
       <NavBar searchFilter={searchFilter} />
-      <PokemonList pokemonList={listPokemon} />
+      <PokemonList pokemonList={filteredList} />
     </div>
   );
 }
